@@ -17,7 +17,7 @@ def main():
 
     # ch03 L02
     ship = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
-    print(type(ship))
+    # print(type(ship))
     dt = 0.0
     # game loop
     while True:
@@ -32,6 +32,8 @@ def main():
         screen.fill("black")
 
         # ch03 L02
+        ship.update(dt)
+
         ship.draw(screen)
         
         pygame.display.flip()

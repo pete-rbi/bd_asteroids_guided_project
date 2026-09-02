@@ -11,13 +11,19 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
+    
+    # CH03 L05
+    updatable = pygame.sprite.Group() 
+    drawable = pygame.sprite.Group()  
+    Player.containers = (updatable, drawable)
+    
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
     clock = pygame.time.Clock()
 
     # ch03 L02
     ship = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
-    # print(type(ship))
+    
     dt = 0.0
     # game loop
     while True:
@@ -32,9 +38,14 @@ def main():
         screen.fill("black")
 
         # ch03 L02
-        ship.update(dt)
+        # ship.update(dt)
+        # ship.draw(screen)
 
-        ship.draw(screen)
+        # CH03 L05
+        updatable.update(dt)
+        for p in drawable:
+            p.draw(screen)
+        
         
         pygame.display.flip()
         dt = clock.tick(60) / 1000

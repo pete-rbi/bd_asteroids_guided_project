@@ -14,12 +14,17 @@ from asteroid import Asteroid
 from logger import log_event
 import sys
 
-def main():
+# CH04 L03 FROM SOLUTION FILE
+from shot import Shot
+# FORFEITED XP -- prim. error player class
+
+def main() -> None:
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
-    
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock()
     # CH03 L05
     updatable = pygame.sprite.Group() 
     drawable = pygame.sprite.Group()  
@@ -27,29 +32,30 @@ def main():
 
     # CH04 L01
     asteroids = pygame.sprite.Group()
+    # Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = updatable
+    #roids = AsteroidField()
+    asteroid_field = AsteroidField()
+    
+    # CH04 L03 - SOLUTION FILE XP FORFEITED
+    shots = pygame.sprite.Group()
     Asteroid.containers = (asteroids, updatable, drawable)
-    AsteroidField.containers = (updatable)
-    roids = AsteroidField()
-    
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    
-    clock = pygame.time.Clock()
+    Shot.containers = (shots, updatable, drawable)
 
+    # this line is a very very important line....
+    
     # ch03 L02
-    ship = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
+    player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
     
     dt = 0.0
     # game loop
     while True:
-        # 1. Check for player inputs
-        # 2. Update the game world
-        # 3. Draw the game to the screen
         log_state()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        screen.fill("black")
+        
 
         # ch03 L02
         # ship.update(dt)
@@ -57,19 +63,22 @@ def main():
 
         # CH03 L05 and CH04 L02
         updatable.update(dt)
-        for a in asteroids:
-            if a.collide_with(ship):
+        for a in asteroids: # sol. file used asteroid, not a
+            #  sol. file wrong should be collide_with !
+            if a.collide_with(player):
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
-                
-        for p in drawable:
+        screen.fill("black")        
+
+        for p in drawable: # solution used obj, not p
             p.draw(screen)
         
         
         pygame.display.flip()
+
+        # limit the framerate to 60 FPS -- from sol. file
         dt = clock.tick(60) / 1000
-        
-        
+                
 if __name__ == "__main__":
     main()

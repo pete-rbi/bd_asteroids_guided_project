@@ -65,7 +65,9 @@ def main() -> None:
         updatable.update(dt)
         for a in asteroids: # sol. file used asteroid, not a
             #  sol. file wrong should be collide_with !
-            if a.collide_with(player):
+            # the house is rarely wrong, i'm a moron !
+            # my mistake....
+            if a.collides_with(player): # updated, the house wins again...
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()

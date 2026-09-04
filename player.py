@@ -14,6 +14,7 @@ from constants import (
     PLAYER_SHOOT_SPEED,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
+    PLAYER_SHOOT_COOLDOWN_SECONDS,
 )
 # why does the solution file use () imporying ?
 from shot import Shot
@@ -25,6 +26,8 @@ class Player(CircleShape):
         # rotation = 0 WRONG !
         # self.rotation = rotation WRONG !
         self.rotation = 0.0
+        self.cooldown = 0.0 # ch04l04 todo
+        
     # in the Player class
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -44,7 +47,9 @@ class Player(CircleShape):
         
 
     def update(self, dt: float) -> None:
+        self.cooldown -= dt # ch04l04 todo
         keys = pygame.key.get_pressed()
+         
 
         if keys[pygame.K_a]:
             self.rotate(-dt)
@@ -57,8 +62,11 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]: # per sol file. xp forfeited.
-            self.shoot()
-            
+            if self.cooldown > 0: # ch04l04 todo
+                pass
+            else:
+                self.shoot()
+                self.cooldown = PLAYER_SHOOT_COOLDOWN_SECONDS
 
     # CH04 L03 -FROM SOLUTION FILE - FORFEITED XP
     def shoot(self) -> None:

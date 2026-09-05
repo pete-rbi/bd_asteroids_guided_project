@@ -1,4 +1,5 @@
 import pygame
+# You need to have pygame installed.
 import sys
 import random
 from collections.abc import Callable
@@ -219,6 +220,19 @@ def main() -> None:
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
+    print("Code from:")
+    print("boot.dev 'Asteroid Guided Project' course")
+    print("pete-rbi edited it down to one file *main.py*")    
+    print()
+    print("#########################")
+    print("Keyboard Button Control")
+    print("Press 'w' to go forward")
+    print("Press 's' to go backwards")
+    print("Press 'a' to rotate left")
+    print("Press 'd' to rotate right")
+    print("Press 'spacebar' to fire")
+    print("##########################")
+    
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
@@ -245,25 +259,28 @@ def main() -> None:
     player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
     
     dt = 0.0
+    running = True
     # game loop
-    while True:
+    while running:
         
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                print("Game quit!")
+                running = False
         
 
         
 
         
         updatable.update(dt)
-        for a in asteroids: 
+        for asteroid in asteroids: 
             
-            if a.collides_with(player):
+            if asteroid.collides_with(player):
                 
                 print("Game over!")
-                sys.exit()
+                running = False
+                # sys.exit()
 
         for asteroid in asteroids: 
             for shot in shots:
@@ -287,4 +304,6 @@ def main() -> None:
                 
 if __name__ == "__main__":
     main()
-
+    pygame.quit()
+    # sys.exit()
+ 

@@ -64,13 +64,21 @@ def main() -> None:
         # CH03 L05 and CH04 L02
         updatable.update(dt)
         for a in asteroids: # sol. file used asteroid, not a
-            #  sol. file wrong should be collide_with !
-            # the house is rarely wrong, i'm a moron !
-            # my mistake....
+            
             if a.collides_with(player): # updated, the house wins again...
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+
+        for asteroid in asteroids: # ch04l05 todo
+            for shot in shots:
+                if shot.collides_with(asteroid):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    # asteroid.kill()
+                    asteroid.split() # ch04l06 todo
+                    
+
         screen.fill("black")        
 
         for p in drawable: # solution used obj, not p
